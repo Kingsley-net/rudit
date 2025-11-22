@@ -1,0 +1,162 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap");
+@import "tailwindcss";
+
+/* Your existing styles below */
+
+@layer utilities {
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+
+  @keyframes zap-move {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 200% 0%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  .zap-animate {
+    /* animated gradient */
+    background: linear-gradient(
+      90deg,
+      hsl(var(--cyan-bright)),
+      hsl(var(--teal-light)),
+      hsl(var(--cyan-bright))
+    );
+    background-size: 200% 200%;
+    animation: zap-move 1.6s linear infinite;
+
+    /* this is the magic */
+    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke="white" stroke-width="2" fill="white" d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>') center/contain no-repeat;
+            mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path stroke="white" stroke-width="2" fill="white" d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>') center/contain no-repeat;
+
+    /* ensures icon can size */
+    display: inline-block;
+  }
+}
+
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    /* Dark SaaS Theme */
+    --background: 206 88% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 206 88% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 206 88% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 187 100% 50%;
+    --primary-foreground: 206 88% 7%;
+
+    --secondary: 150 100% 50%;
+    --secondary-foreground: 206 88% 7%;
+
+    --muted: 206 25% 25%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 187 100% 50%;
+    --accent-foreground: 206 88% 7%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 206 30% 20%;
+    --input: 206 30% 20%;
+    --ring: 187 100% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 206 88% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 187 100% 50%;
+    --sidebar-primary-foreground: 206 88% 7%;
+    --sidebar-accent: 150 100% 50%;
+    --sidebar-accent-foreground: 206 88% 7%;
+    --sidebar-border: 206 30% 20%;
+    --sidebar-ring: 187 100% 50%;
+
+    /* Custom teal/cyan colors */
+    --cyan-bright: 187 100% 50%;
+    --teal: 150 100% 50%;
+    --teal-light: 160 100% 60%;
+    --teal-dark: 140 100% 40%;
+  }
+  
+
+  .dark {
+    --background: 206 88% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 206 88% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 206 88% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 187 100% 50%;
+    --primary-foreground: 206 88% 7%;
+
+    --secondary: 150 100% 50%;
+    --secondary-foreground: 206 88% 7%;
+
+    --muted: 206 25% 25%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 187 100% 50%;
+    --accent-foreground: 206 88% 7%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 206 30% 20%;
+    --input: 206 30% 20%;
+    --ring: 187 100% 50%;
+
+    --sidebar-background: 206 88% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 187 100% 50%;
+    --sidebar-primary-foreground: 206 88% 7%;
+    --sidebar-accent: 150 100% 50%;
+    --sidebar-accent-foreground: 206 88% 7%;
+    --sidebar-border: 206 30% 20%;
+    --sidebar-ring: 187 100% 50%;
+
+    --cyan-bright: 187 100% 50%;
+    --teal: 150 100% 50%;
+    --teal-light: 160 100% 60%;
+    --teal-dark: 140 100% 40%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: theme('fontFamily.heading', 'Poppins, sans-serif');
+    font-weight: 700;
+  }
+
+  :where(p, span, li, a, button, label, td, th) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  pre,
+  code {
+    overflow-x: auto;
+    white-space: pre;
+  }
+}

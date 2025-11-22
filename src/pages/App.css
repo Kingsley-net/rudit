@@ -1,0 +1,24 @@
+
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+
+  /* â¡ Moving gradient animation for the Zap icon */
+  @keyframes zap-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .zap-animate {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--cyan-bright)),
+      hsl(var(--teal-light)),
+      hsl(var(--cyan-bright))
+    );
+    background-size: 300% 300%;
+    animation: zap-move 1.5s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
