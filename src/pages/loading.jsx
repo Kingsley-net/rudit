@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Logo from '/home/kali/Projects/edu-tech/src/components/images/aud.png'
+import Logo from '../components/images/aud.png'
 
 export default function RuditLoadingScreen({ onComplete }) { // ADD onComplete prop here
   const [displayText, setDisplayText] = useState('');

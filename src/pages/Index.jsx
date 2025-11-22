@@ -1,5 +1,5 @@
 import { ArrowRight, Zap, Shield, Clock, Users, BarChart3, Sparkles, TruckElectric } from "lucide-react";
-import rudit from '/home/kali/Projects/edu-tech/src/components/images/rudit-logo.png'
+import rudit from "../components/images/rudit-logo.png";
 import './App.css'
 import LoadingScreen from './loading';
 import { useState } from 'react'; 
