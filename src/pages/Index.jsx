@@ -427,7 +427,7 @@ export default function RuditWithWaitlist() {
           <img src={rud} className="h-20 w-auto"/>
             
             <p className="text-slate-400">Smart School Management for Nigeria</p>
-            <div className="mt-4 text-slate-400">
+            <div className="mt-4 text-slate-400 flex flex-col jusify-center items-center">
               <p className="font-semibold text-white">ruditnigeria@gmail.com</p>
               <p className="font-semibold text-white">+234 907 339 1780</p>
               <p className="mt-2">Rivers, Nigeria</p>
