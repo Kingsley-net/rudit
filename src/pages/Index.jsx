@@ -12,7 +12,7 @@ export default function RuditWithWaitlist() {
     numStudents: ''
   });
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isLoading, setisloading] = useState(true)
   const handleChange = (e) => {
     setFormData({
