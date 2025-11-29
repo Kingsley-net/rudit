@@ -1,71 +1,32 @@
-import { ArrowRight, Zap, Shield, Clock,HeartIcon, Users, BarChart3, CheckCircle, X, FileText, CreditCard, Globe, AlertCircle } from "lucide-react";
-import { useState } from 'react';
-import rud from '../components/images/rudit-logo.png'
-import RuditLoadingScreen from './loading'
+import { ArrowRight, Zap, Shield, Clock, HeartIcon, Users, BarChart3, CheckCircle, X, FileText, CreditCard, Globe, AlertCircle } from "lucide-react";
+import { useState } from "react";
+import { useForm, ValidationError } from "@formspree/react";
+import rud from "../components/images/rudit-logo.png";
+import RuditLoadingScreen from "./loading";
+
 export default function RuditWithWaitlist() {
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
-  const [formData, setFormData] = useState({
-    schoolName: '',
-    yourName: '',
-    email: '',
-    phone: '',
-    numStudents: ''
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [isLoading, setisloading] = useState(true)
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const [isLoading, setisloading] = useState(true);
 
- const handleLoading =()=>{
-  setisloading(false)
-} 
-  const handleSubmit = async () => {
-    setLoading(true);
-    
-    // Replace with your Formspree endpoint
-    try {
-      const response = await fetch('https://formspree.io/f/xgvboynb', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+  // FORMSPREE HOOK
+  const [state, handleSubmit] = useForm("xgvboynb");
 
-      if (response.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          setShowWaitlistModal(false);
-          setSubmitted(false);
-          setFormData({
-            schoolName: '',
-            yourName: '',
-            email: '',
-            phone: '',
-            numStudents: ''
-          });
-        }, 3000);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error submitting form. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleLoading = () => setisloading(false);
 
-  return (isLoading ?(<RuditLoadingScreen onComplete={handleLoading}/>):
-    (<div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+  // If the form succeeded
+  const afterSubmit = state.succeeded;
+
+  return isLoading ? (
+    <RuditLoadingScreen onComplete={handleLoading} />
+  ) : (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+
       {/* Waitlist Modal */}
       {showWaitlistModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
-  <div className="relative w-full max-w-lg bg-slate-800 rounded-2xl shadow-2xl border border-cyan-500/30 p-8 my-8 max-h-[90vh] overflow-y-auto animate-in">
-   {/* Close button */}
+          <div className="relative w-full max-w-lg bg-slate-800 rounded-2xl shadow-2xl border border-cyan-500/30 p-8 my-8 max-h-[90vh] overflow-y-auto">
+
+            {/* Close button */}
             <button
               onClick={() => setShowWaitlistModal(false)}
               className="absolute top-4 right-4 text-slate-400 hover:text-white transition"
@@ -73,7 +34,8 @@ export default function RuditWithWaitlist() {
               <X className="w-6 h-6" />
             </button>
 
-            {submitted ? (
+            {/* SUCCESS MESSAGE */}
+            {afterSubmit ? (
               <div className="text-center py-8">
                 <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <CheckCircle className="w-10 h-10 text-white" />
@@ -83,6 +45,7 @@ export default function RuditWithWaitlist() {
               </div>
             ) : (
               <>
+                {/* HEADER */}
                 <div className="text-center mb-6">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
                     <Zap className="w-4 h-4 text-cyan-400" />
@@ -92,7 +55,9 @@ export default function RuditWithWaitlist() {
                   <p className="text-slate-400">Be among the first 50 schools. Get 50% off for 6 months.</p>
                 </div>
 
-                <div className="space-y-4">
+                {/* FORM */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+
                   {/* School Name */}
                   <div>
                     <label className="block text-sm font-semibold text-slate-300 mb-2">
@@ -101,12 +66,11 @@ export default function RuditWithWaitlist() {
                     <input
                       type="text"
                       name="schoolName"
-                      value={formData.schoolName}
-                      onChange={handleChange}
-                      placeholder="e.g., Bright Future Academy"
                       required
+                      placeholder="e.g., Bright Future Academy"
                       className="w-full px-4 py-3 rounded-lg bg-slate-900 border-2 border-slate-700 focus:border-cyan-500 focus:outline-none transition text-white placeholder-slate-500"
                     />
+                    <ValidationError prefix="School Name" field="schoolName" errors={state.errors} />
                   </div>
 
                   {/* Your Name */}
@@ -117,12 +81,11 @@ export default function RuditWithWaitlist() {
                     <input
                       type="text"
                       name="yourName"
-                      value={formData.yourName}
-                      onChange={handleChange}
-                      placeholder="e.g., Mr. Chinedu Okafor"
                       required
+                      placeholder="e.g., Mr. Chinedu Okafor"
                       className="w-full px-4 py-3 rounded-lg bg-slate-900 border-2 border-slate-700 focus:border-cyan-500 focus:outline-none transition text-white placeholder-slate-500"
                     />
+                    <ValidationError prefix="Your Name" field="yourName" errors={state.errors} />
                   </div>
 
                   {/* Email */}
@@ -133,12 +96,11 @@ export default function RuditWithWaitlist() {
                     <input
                       type="email"
                       name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="school@example.com"
                       required
+                      placeholder="school@example.com"
                       className="w-full px-4 py-3 rounded-lg bg-slate-900 border-2 border-slate-700 focus:border-cyan-500 focus:outline-none transition text-white placeholder-slate-500"
                     />
+                    <ValidationError prefix="Email" field="email" errors={state.errors} />
                   </div>
 
                   {/* Phone */}
@@ -149,23 +111,20 @@ export default function RuditWithWaitlist() {
                     <input
                       type="tel"
                       name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="0803 XXX XXXX"
                       required
+                      placeholder="0803 XXX XXXX"
                       className="w-full px-4 py-3 rounded-lg bg-slate-900 border-2 border-slate-700 focus:border-cyan-500 focus:outline-none transition text-white placeholder-slate-500"
                     />
+                    <ValidationError prefix="Phone" field="phone" errors={state.errors} />
                   </div>
 
-                  {/* Number of Students */}
+                  {/* Students Range */}
                   <div>
                     <label className="block text-sm font-semibold text-slate-300 mb-2">
                       Number of Students *
                     </label>
                     <select
                       name="numStudents"
-                      value={formData.numStudents}
-                      onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg bg-slate-900 border-2 border-slate-700 focus:border-cyan-500 focus:outline-none transition text-white"
                     >
@@ -175,27 +134,30 @@ export default function RuditWithWaitlist() {
                       <option value="300-500">300 - 500 students</option>
                       <option value="500+">500+ students</option>
                     </select>
+                    <ValidationError prefix="Students" field="numStudents" errors={state.errors} />
                   </div>
 
-                  {/* Submit Button */}
+                  {/* SUBMIT */}
                   <button
-                    onClick={handleSubmit}
-                    disabled={loading}
+                    type="submit"
+                    disabled={state.submitting}
                     className="w-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white font-bold px-8 py-4 rounded-lg text-lg transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {loading ? 'Submitting...' : 'Join Waitlist'}
-                    {!loading && <ArrowRight className="w-5 h-5" />}
+                    {state.submitting ? "Submitting..." : "Join Waitlist"}
+                    {!state.submitting && <ArrowRight className="w-5 h-5" />}
                   </button>
 
                   <p className="text-sm text-slate-400 text-center">
                     No spam. Unsubscribe anytime. We respect your privacy.
                   </p>
-                </div>
+                </form>
               </>
             )}
           </div>
         </div>
       )}
+
+     
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-40 backdrop-blur-md bg-slate-900/80 border-b border-slate-700">
@@ -439,5 +401,5 @@ export default function RuditWithWaitlist() {
           </div>
         </div>
       </footer>
-    </div> ))};
+    </div> )};
           
