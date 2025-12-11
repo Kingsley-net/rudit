@@ -211,7 +211,7 @@ export default function RuditWithWaitlist() {
                 onClick={() => setShowWaitlistModal(true)}
                 className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white font-bold text-lg transition transform hover:scale-105 shadow-lg"
               >
-                Join Waitlist - Get 50% Off
+                Join Waitlist - Get 1 Academic Term Free Trial
               </button>
               <button className="px-8 py-4 rounded-xl border border-cyan-500/30 text-cyan-400 hover:bg-slate-800 transition font-semibold flex items-center justify-center gap-2">
                 Watch Demo <ArrowRight className="w-5 h-5" />
